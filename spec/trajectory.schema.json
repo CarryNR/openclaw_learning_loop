@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.dev/schemas/learning-loop/trajectory.schema.json",
+  "title": "OpenClaw Task Trajectory",
+  "type": "object",
+  "required": ["goal", "outcome", "context_summary", "task_type", "steps"],
+  "properties": {
+    "id": { "type": "string" },
+    "created_at": { "type": "string" },
+    "goal": { "type": "string", "minLength": 1 },
+    "outcome": { "type": "string", "enum": ["success", "failure"] },
+    "context_summary": { "type": "string", "minLength": 1 },
+    "task_type": { "type": "string", "minLength": 1 },
+    "repo_signals": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["summary"],
+        "properties": {
+          "summary": { "type": "string", "minLength": 1 },
+          "evidence": { "type": ["string", "null"] },
+          "tool": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string", "minLength": 1 },
+          "result": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      },
+      "default": []
+    },
+    "result_summary": { "type": ["string", "null"] },
+    "failure_reason": { "type": ["string", "null"] },
+    "human_fix": { "type": ["string", "null"] },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "outcome": { "const": "success" } } },
+      "then": { "required": ["result_summary"] }
+    },
+    {
+      "if": { "properties": { "outcome": { "const": "failure" } } },
+      "then": { "required": ["failure_reason"] }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "traj_success_schema_first",
+  "created_at": "2026-05-29T10:00:00+00:00",
+  "goal": "Add a minimal task trajectory schema before implementing distillation logic.",
+  "outcome": "success",
+  "context_summary": "The repository was empty, so the first durable decision was to define schemas and examples before any runtime behavior.",
+  "task_type": "project_bootstrap",
+  "repo_signals": ["python", "cli", "empty_repository"],
+  "steps": [
+    {
+      "summary": "Defined the trajectory fields needed to separate successful and failed task runs.",
+      "evidence": "Successful traces require result_summary; failed traces require failure_reason."
+    },
+    {
+      "summary": "Kept the schema human-reviewable and machine-serializable.",
+      "evidence": "The schema uses short JSON objects rather than raw chat transcripts."
+    },
+    {
+      "summary": "Added examples that can be used as fixtures for the distiller and retrieval store.",
+      "tool": "file_editor"
+    }
+  ],
+  "tool_calls": [
+    {
+      "name": "file_editor",
+      "purpose": "Create schema and example files.",
+      "result": "Project bootstrap artifacts were added."
+    }
+  ],
+  "result_summary": "The project now has a concrete input format for experience compilation.",
+  "tags": ["schema", "mvp", "bootstrap"]
+}

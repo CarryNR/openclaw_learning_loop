@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openclaw.dev/schemas/learning-loop/experience.schema.json",
+  "title": "OpenClaw Experience Asset",
+  "type": "object",
+  "required": [
+    "kind",
+    "title",
+    "body",
+    "source_trajectory_id",
+    "task_type",
+    "confidence"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "created_at": { "type": "string" },
+    "kind": {
+      "type": "string",
+      "enum": ["skill_draft", "checklist", "anti_pattern", "warning_rule"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "body": { "type": "string", "minLength": 1 },
+    "source_trajectory_id": { "type": "string", "minLength": 1 },
+    "task_type": { "type": "string", "minLength": 1 },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "repo_signals": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": false
+}
